@@ -303,7 +303,8 @@ def BasisCommonGP(priorFunction, basisFunction, orfFunction, coefficients=False,
                 self._params[par.name] = par
 
             self._psrpos = psr.pos
-
+            self._psrname = psr.name
+            
             if coefficients:
                 self._construct_basis()
 
@@ -392,14 +393,14 @@ def BasisCommonGP(priorFunction, basisFunction, orfFunction, coefficients=False,
                 self._construct_basis(params)
 
                 prior = BasisCommonGP._prior(self._labels, params=params)
-                orf = BasisCommonGP._orf(self._psrpos, self._psrpos, params=params)
+                orf = BasisCommonGP._orf(self._psrpos, self._psrpos, self._psrname,self._psrname,params=params)
 
                 return prior * orf
 
             @classmethod
             def get_phicross(cls, signal1, signal2, params):
                 prior = BasisCommonGP._prior(signal1._labels, params=params)
-                orf = BasisCommonGP._orf(signal1._psrpos, signal2._psrpos, params=params)
+                orf = BasisCommonGP._orf(signal1._psrpos, signal2._psrpos, signal1._psrname, signal2._psrname, params=params)
 
                 return prior * orf
 
